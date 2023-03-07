@@ -175,6 +175,7 @@ typedef enum {
     OSD_AUX_VALUE,
     OSD_READY_MODE,
     OSD_RSNR_VALUE,
+    OSD_RADAR,
     OSD_SYS_GOGGLE_VOLTAGE,
     OSD_SYS_VTX_VOLTAGE,
     OSD_SYS_BITRATE,
@@ -185,8 +186,7 @@ typedef enum {
     OSD_SYS_VTX_DVR,
     OSD_SYS_WARNINGS,
     OSD_SYS_VTX_TEMP,
-    OSD_SYS_FAN_SPEED,
-    OSD_RADAR,
+    OSD_SYS_FAN_SPEED, // The last SYS element must be updated in osdDrawSingleElement in osd_elements.c
     OSD_ITEM_COUNT // MUST BE LAST
 } osd_items_e;
 

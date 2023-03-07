@@ -49,6 +49,7 @@
 // -Wpadded can be turned on to check padding of structs
 //#pragma GCC diagnostic warning "-Wpadded"
 
+
 #if !defined(CLOUD_BUILD) && !defined(SITL)
 #define USE_DSHOT
 #endif
@@ -168,7 +169,6 @@
 #define USE_RANGEFINDER_HCSR04
 #define USE_RANGEFINDER_TF
 
-#define USE_RADAR
 #endif
 
 #define USE_RX_PPM
@@ -407,6 +407,7 @@
 
 #if defined(USE_GPS)
 #define USE_CMS_GPS_RESCUE_MENU
+#define USE_RADAR
 #endif
 
 #endif // defined(USE_OSD)

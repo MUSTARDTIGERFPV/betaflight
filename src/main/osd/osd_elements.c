@@ -927,6 +927,11 @@ static void osdElementRadar(osdElementParms_t *element)
     if (millis() - last_peer_change > 2000) {
     	id = radarGetNextHealthyPeer(id);
     }
+    const uint8_t xpos = element->elemPosX;
+    const uint8_t ypos = element->elemPosY;
+    osdDisplayWrite(element, xpos, ypos, DISPLAYPORT_ATTR_NORMAL, element->buff);
+    element->drawElement = false;
+    debug[0]++;
 }
 #endif
 
@@ -1736,6 +1741,9 @@ static const uint8_t osdElementDisplayOrder[] = {
     OSD_TOTAL_FLIGHTS,
 #endif
     OSD_AUX_VALUE,
+#ifdef USE_RADAR
+    OSD_RADAR,
+#endif
     OSD_SYS_GOGGLE_VOLTAGE,
     OSD_SYS_VTX_VOLTAGE,
     OSD_SYS_BITRATE,
@@ -1747,9 +1755,6 @@ static const uint8_t osdElementDisplayOrder[] = {
     OSD_SYS_WARNINGS,
     OSD_SYS_VTX_TEMP,
     OSD_SYS_FAN_SPEED,
-#ifdef USE_RADAR
-    OSD_RADAR,
-#endif
 };
 
 // Define the mapping between the OSD element id and the function to draw it
@@ -1980,7 +1985,7 @@ static void osdDrawSingleElement(displayPort_t *osdDisplayPort, uint8_t item)
     element.attr = DISPLAYPORT_ATTR_NORMAL;
 
     // Call the element drawing function
-    if ((item >= OSD_SYS_GOGGLE_VOLTAGE) && (item < OSD_ITEM_COUNT)) {
+    if ((item >= OSD_SYS_GOGGLE_VOLTAGE) && (item <= OSD_SYS_FAN_SPEED)) {
         displaySys(osdDisplayPort, elemPosX, elemPosY, (displayPortSystemElement_e)(item - OSD_SYS_GOGGLE_VOLTAGE + DISPLAYPORT_SYS_GOGGLE_VOLTAGE));
     } else {
         osdElementDrawFunction[item](&element);
