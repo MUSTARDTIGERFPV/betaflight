@@ -164,6 +164,7 @@
 #include "sensors/barometer.h"
 #include "sensors/battery.h"
 #include "sensors/sensors.h"
+#include "sensors/radar.h"
 
 #ifdef USE_GPS_PLUS_CODES
 // located in lib/main/google/olc
@@ -907,6 +908,25 @@ static void osdElementTotalFlights(osdElementParms_t *element)
 {
     const int32_t total_flights = statsConfig()->stats_total_flights;
     tfp_sprintf(element->buff, "#%d", total_flights);
+}
+#endif
+
+#ifdef USE_RADAR
+static void osdElementRadar(osdElementParms_t *element)
+{
+    static uint32_t last_peer_change = 0;
+    static uint8_t id;
+    uint32_t dist;
+    int32_t dir;
+    if (radar_peers[id].lat != 0) {
+        GPS_distance_cm_bearing(&gpsSol.llh.lat, &gpsSol.llh.lon, &radar_peers[id].lat, &radar_peers[id].lon, &dist, &dir);
+        osdFormatDistanceString(element->buff, dist, id + 65);
+    } else {
+        tfp_sprintf(element->buff, "RADAR: %c -", id + 65);
+    }
+    if (millis() - last_peer_change > 2000) {
+    	id = radarGetNextHealthyPeer(id);
+    }
 }
 #endif
 
@@ -1727,6 +1747,9 @@ static const uint8_t osdElementDisplayOrder[] = {
     OSD_SYS_WARNINGS,
     OSD_SYS_VTX_TEMP,
     OSD_SYS_FAN_SPEED,
+#ifdef USE_RADAR
+    OSD_RADAR,
+#endif
 };
 
 // Define the mapping between the OSD element id and the function to draw it
@@ -1848,6 +1871,9 @@ const osdElementDrawFn osdElementDrawFunction[OSD_ITEM_COUNT] = {
     [OSD_TOTAL_FLIGHTS]           = osdElementTotalFlights,
 #endif
     [OSD_AUX_VALUE]               = osdElementAuxValue,
+#ifdef USE_RADAR
+    [OSD_RADAR]                   = osdElementRadar,
+#endif
 #ifdef USE_MSP_DISPLAYPORT
     [OSD_SYS_GOGGLE_VOLTAGE]      = osdElementSys,
     [OSD_SYS_VTX_VOLTAGE]         = osdElementSys,

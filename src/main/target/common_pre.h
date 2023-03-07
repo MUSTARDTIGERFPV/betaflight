@@ -167,6 +167,8 @@
 #define USE_RANGEFINDER
 #define USE_RANGEFINDER_HCSR04
 #define USE_RANGEFINDER_TF
+
+#define USE_RADAR
 #endif
 
 #define USE_RX_PPM

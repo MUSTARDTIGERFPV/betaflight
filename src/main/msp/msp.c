@@ -144,6 +144,9 @@
 #include "sensors/compass.h"
 #include "sensors/gyro.h"
 #include "sensors/gyro_init.h"
+#ifdef USE_RADAR
+#include "sensors/radar.h"
+#endif
 #include "sensors/rangefinder.h"
 
 #include "telemetry/msp_shared.h"
@@ -3951,6 +3954,22 @@ static mspResult_e mspProcessInCommand(mspDescriptor_t srcDesc, int16_t cmdMSP, 
 #endif
         }
         break;
+#ifdef USE_RADAR
+    case MSP2_COMMON_SET_RADAR_POS:
+        {
+            const uint8_t id = MIN(sbufReadU8(src), RADAR_MAX_POIS - 1); // Radar poi number
+            radar_peers[id].radar_no = id;
+            radar_peers[id].state = sbufReadU8(src);                      // 0=undefined, 1=armed, 2=lost
+            radar_peers[id].lat = sbufReadU32(src);                   // lat 10E7
+            radar_peers[id].lon = sbufReadU32(src);                   // lon 10E7
+            radar_peers[id].alt = sbufReadU32(src);                   // altitude (cm)
+            radar_peers[id].heading = sbufReadU16(src);                   // °
+            radar_peers[id].speed = sbufReadU16(src);                     // cm/s
+            radar_peers[id].lq = sbufReadU8(src);                         // Link quality, from 0 to 4
+            radar_timestamps[id] = millis();
+        }
+        break;
+#endif
 
     default:
         // we do not know how to handle the (valid) message, indicate error MSP $M!
