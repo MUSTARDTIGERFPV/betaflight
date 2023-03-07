@@ -62,10 +62,10 @@
 #define LED0_PIN             PC8
 #define SPI1_SCK_PIN         PA5
 #define SPI2_SCK_PIN         PB13
-#define SPI1_MISO_PIN        PA6
-#define SPI2_MISO_PIN        PB14
-#define SPI1_MOSI_PIN        PA7
-#define SPI2_MOSI_PIN        PB15
+#define SPI1_SDI_PIN         PA6
+#define SPI2_SDI_PIN         PB14
+#define SPI1_SDO_PIN         PA7
+#define SPI2_SDO_PIN         PB15
 #define CAMERA_CONTROL_PIN   PB3
 #define ADC_VBAT_PIN         PC0
 #define ADC_RSSI_PIN         PC2
@@ -110,7 +110,7 @@
 #define SYSTEM_HSE_MHZ 8
 #define MAX7456_SPI_INSTANCE SPI2
 //TODO #define DASHBOARD_I2C_BUS 2
-//TODO #define PINIO_CONFIG 129,1,1,1
-//TODO #define PINIO_BOX 0,255,255,255
+#define PINIO1_CONFIG 129
+#define PINIO1_BOX 0
 #define USE_SPI_GYRO
 #define GYRO_1_SPI_INSTANCE SPI1

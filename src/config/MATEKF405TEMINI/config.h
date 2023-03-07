@@ -67,12 +67,12 @@
 #define SPI1_SCK_PIN         PA5
 #define SPI2_SCK_PIN         PB13
 #define SPI3_SCK_PIN         NONE
-#define SPI1_MISO_PIN        PB4
-#define SPI2_MISO_PIN        PC2
-#define SPI3_MISO_PIN        NONE
-#define SPI1_MOSI_PIN        PA7
-#define SPI2_MOSI_PIN        PC3
-#define SPI3_MOSI_PIN        NONE
+#define SPI1_SDI_PIN         PB4
+#define SPI2_SDI_PIN         PC2
+#define SPI3_SDI_PIN         NONE
+#define SPI1_SDO_PIN         PA7
+#define SPI2_SDO_PIN         PC3
+#define SPI3_SDO_PIN         NONE
 #define ADC_VBAT_PIN         PC4
 #define ADC_RSSI_PIN         PB0
 #define ADC_CURR_PIN         PC5
@@ -115,11 +115,13 @@
 #define DEFAULT_VOLTAGE_METER_SCALE     210
 #define DEFAULT_CURRENT_METER_SCALE     150
 #define BEEPER_INVERTED
+#define PINIO1_BOX 40
+#define PINIO2_BOX 41
 #define SYSTEM_HSE_MHZ                  8
 #define DEFAULT_BLACKBOX_DEVICE         BLACKBOX_DEVICE_FLASH
 #define MAX7456_SPI_INSTANCE            SPI1
-//TODO #define PINIO_BOX 40,41,255,255
 #define FLASH_SPI_INSTANCE              SPI2
+
 #define USE_SPI_GYRO
 #define GYRO_1_SPI_INSTANCE             SPI1
 #define GYRO_1_ALIGN                    CW270_DEG_FLIP
